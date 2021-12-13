@@ -63,5 +63,10 @@ then
     ./scripts/pihole.sh
 fi
 
+if $hass_enable
+then 
+    ./scripts/hass.sh
+fi
+
 rm "$STATE_FILE"
 sudo reboot

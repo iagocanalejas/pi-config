@@ -1,0 +1,20 @@
+version: "3"
+
+# More info at https://github.com/home-assistant/docker
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/raspberrypi4-homeassistant:stable
+    privileged: true
+    hostname:
+    ports:
+      - "8123:8123/tcp"
+      - "8123:8123/udp"
+    environment:
+      TZ:
+    volumes:
+      - '/home/pi/hass:/config'
+      - '/etc/localtime:/etc/localtime:ro'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
