@@ -55,5 +55,13 @@ if ! [[ -f "$STATE_FILE" ]]; then
     sudo reboot
 fi
 
+echo "-------------------------------------------------"
+echo "Raspberry already updated"
+echo "-------------------------------------------------"
+if $pihole_enable
+then 
+    ./scripts/pihole.sh
+fi
+
 rm "$STATE_FILE"
 sudo reboot
