@@ -68,5 +68,9 @@ then
     ./scripts/hass.sh
 fi
 
+if $samba_enable
+then 
+    ./scripts/samba.sh
+fi
+
 rm "$STATE_FILE"
-sudo reboot
