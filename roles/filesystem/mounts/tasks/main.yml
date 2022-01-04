@@ -1,0 +1,9 @@
+- name: Mount the data drives
+  mount:
+    name: "{{ item.path }}"
+    src: "UUID={{ item.uuid }}"
+    fstype: ntfs
+    state: mounted
+    passno: "2"
+  with_items: "{{ disks }}"
+  when: disks[0] is defined

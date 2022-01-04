@@ -1,0 +1,37 @@
+
+#
+# Misc
+#
+timezone: Europe/Madrid
+
+ntp_timezone: "{{ timezone }}"
+
+locale: en_US.UTF-8
+
+keyboard_layout: us
+
+username: pi
+
+guid: "1000"
+
+mac_address_mapping:
+  "e4:5f:01:58:1c:d2":
+    name: pihole.rpi.com
+    ip: "192.168.1.20"
+  "e4:5f:01:01:e0:07":
+    name: pinas.rpi.com
+    ip: "192.168.1.21"
+
+dns_nameservers:
+  - "192.168.1.20"
+  - "8.8.8.8"
+  - "8.8.4.4"
+
+ip_gateway: "192.168.1.1"
+
+#
+# Enable/disable individual Docker containers
+#
+enable_homeassistant: false
+enable_pihole: false
+enable_samba: false

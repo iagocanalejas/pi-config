@@ -1,0 +1,17 @@
+---
+extra_packages:
+  - iperf3
+  - speedtest-cli
+  - htop
+  - stow
+  - git
+  - tmux
+  - mosh
+  - rsync
+  - lm-sensors
+  - iotop
+  - ncdu
+  - hddtemp
+  - python3-dev
+  - python3-pip
+  - reptyr

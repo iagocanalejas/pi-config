@@ -1,0 +1,71 @@
+#
+# Enable/disable individual Docker containers
+#
+hostname: pinas
+
+enable_samba: true
+
+#
+# MergerFS
+#
+mergerfs_root: /mnt/storage
+
+mergerfs_mounts:
+  - path: "{{ mergerfs_root }}/drives"
+    branches:
+      - /mnt/movies
+      - /mnt/anime1
+      - /mnt/anime2
+      - /mnt/trash
+    options: allow_other,use_ino
+  - path: "{{ mergerfs_root }}/anime"
+    branches:
+      - "/mnt/anime1/Anime (A-L)"
+      - "/mnt/anime2/Anime (M-Z)"
+      - /mnt/trash/Videos/Anime
+      - /mnt/trash/Descargas/Anime
+    options: allow_other,use_ino
+  - path: "{{ mergerfs_root }}/media"
+    branches:
+      - /mnt/movies/Videos
+    options: allow_other,use_ino
+
+disks:
+  - { path: /mnt/movies, uuid: 180EE6C70EE69D4E, content: true }   # Movies
+  - { path: /mnt/anime1, uuid: 7296C6E196C6A4C7, content: true }   # Anime (A-L)
+  - { path: /mnt/anime2, uuid: 86C47CA0C47C9461, content: true }   # Anime (M-Z)
+  - { path: /mnt/trash, uuid: F21E328C1E324A3D, content: true }    # See/Trash
+
+#
+# Samba
+#
+samba_server_string: "{{ mac_address_mapping[hostvars[inventory_hostname].ansible_default_ipv4.macaddress].name }}"
+
+samba_users:
+  - name: "{{ username }}"
+    password: "{{ password }}"
+
+samba_shares: 
+  - name: Videos
+    guest_ok: yes
+    read_only: yes
+    browseable: yes
+    owner: "{{ username }}"
+    write_list: "{{ username }}"
+    path: "{{ mergerfs_root }}/media"
+
+  - name: Anime
+    guest_ok: yes
+    read_only: yes
+    browseable: yes
+    owner: "{{ username }}"
+    write_list: "{{ username }}"
+    path: "{{ mergerfs_root }}/anime"
+
+  - name: _drives
+    guest_ok: yes
+    read_only: yes
+    browseable: yes
+    owner: "{{ username }}"
+    write_list: "{{ username }}"
+    path: "{{ mergerfs_root }}/drives"

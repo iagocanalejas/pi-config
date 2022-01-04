@@ -1,0 +1,7 @@
+#
+# Enable/disable individual Docker containers
+#
+hostname: pihole
+
+enable_homeassistant: true
+enable_pihole: true

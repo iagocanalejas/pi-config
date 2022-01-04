@@ -1,0 +1,54 @@
+---
+- hosts: rpi
+  become: true
+
+  roles:
+    - role: essential
+      tags: 
+        - essential
+
+    - role: network
+      tags: 
+        - network
+
+    - role: docker
+      tags:
+        - docker
+
+    - role: containers/pihole
+      when: enable_pihole | default(False)
+      tags:
+        - pihole 
+        - containers
+
+    - role: containers/homeassistant
+      when: enable_homeassistant | default(False)
+      tags: 
+        - homeassistant
+        - smarthome
+        - containers
+      
+    - role: filesystem/mounts
+      when: enable_samba | default(False)
+      tags:
+        - mounts
+        - filesystem
+      
+    - role: sprat.mergerfs
+      when: enable_samba | default(False)
+      tags:
+        - mergerfs
+        - filesystem
+
+    - role: filesystem/samba
+      when: enable_samba | default(False)
+      tags: 
+        - samba
+        - filesystem
+  
+  tasks:
+    - name: reboot
+      reboot:
+        msg: Rebooting due to updates
+        test_command: ping -c 4 "{{ mac_address_mapping[hostvars[inventory_hostname].ansible_default_ipv4.macaddress].ip }}"
+    

@@ -1,0 +1,12 @@
+---
+
+samba_packages:
+  - samba-common
+  - samba
+  - samba-client
+
+samba_configuration: /etc/samba/smb.conf
+
+samba_services:
+  - smbd
+  - nmbd

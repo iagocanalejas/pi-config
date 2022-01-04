@@ -1,0 +1,4 @@
+---
+docker_deps:
+  - 'libffi-dev'
+  - 'libssl-dev'
