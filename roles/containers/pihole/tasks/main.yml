@@ -12,6 +12,7 @@
     image: pihole/pihole:latest
     hostname: "{{ inventory_hostname }}"
     privileged: yes
+    pull: yes
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -31,3 +32,5 @@
     capabilities:
       - NET_ADMIN
     restart_policy: unless-stopped
+  tags:
+    - update

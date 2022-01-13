@@ -12,6 +12,7 @@
     image: "homeassistant/home-assistant:stable"
     hostname: '{{ inventory_hostname }}'
     privileged: true
+    pull: yes
     env:
       "TZ": "{{ timezone }}"
     volumes:
@@ -20,3 +21,5 @@
     capabilities:
       - NET_ADMIN
     restart_policy: unless-stopped
+  tags:
+    - update
