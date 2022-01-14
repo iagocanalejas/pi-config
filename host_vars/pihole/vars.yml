@@ -5,3 +5,7 @@ hostname: pihole
 
 enable_homeassistant: true
 enable_pihole: true
+enable_trade_bot: true
+
+trade_bot_branch: master
+trade_bot_test: true

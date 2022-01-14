@@ -12,6 +12,8 @@
 
 **Samba**: Expose drives as shares to the lcoal network.
 
+**TradeBot**: Test trading bot docker container fetched from [github](https://github.com/CyberPunkMetalHead/gateio-crypto-trading-bot-binance-announcements-new-coins).
+
 ## Setup
 
   1. Make copies of the following files and customize them to your liking:

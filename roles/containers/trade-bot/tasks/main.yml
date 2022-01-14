@@ -1,0 +1,65 @@
+---
+- name: Create trade-bot folder on Pi.
+  ansible.builtin.file:
+    path: "/home/{{ username }}/{{ container_name }}/logs"
+    state: directory
+    mode: 0755
+  become: false
+
+- name: Clone git code
+  ansible.builtin.git:
+    repo: "https://github.com/CyberPunkMetalHead/gateio-crypto-trading-bot-binance-announcements-new-coins.git"
+    dest: "/home/{{ username }}/{{ container_name }}"
+    version: "{{ trade_bot_branch | default(master) }}"
+    update: yes
+    force: yes
+  tags:
+    - update
+
+- name: Generate the bot config file
+  template:
+    src: "templates/{{ item.template }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - {
+        template: config.yml.j2,
+        dest: "/home/{{ username }}/{{ container_name }}/config.yml",
+      }
+    - {
+        template: old_coins.json.j2,
+        dest: "/home/{{ username }}/{{ container_name }}/old_coins.json",
+      }
+    - {
+        template: auth.yml.j2,
+        dest: "/home/{{ username }}/{{ container_name }}/auth/auth.yml",
+      }
+
+- name: Build container image
+  docker_image:
+    name: "{{ container_name }}:{{ trade_bot_branch | default(master) }}"
+    source: build
+    build:
+      path: "/home/{{ username }}/{{ container_name }}"
+    state: present
+  tags:
+    - update
+
+- name: Make sure the {{ container_name }} container is created and running
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ container_name }}:{{ trade_bot_branch | default(master) }}"
+    hostname: "{{ inventory_hostname }}"
+    privileged: yes
+    pull: false
+    env:
+      TZ: "{{ timezone }}"
+    dns_servers:
+      - 127.0.0.1
+      - 8.8.8.8
+    volumes:
+      - "/home/{{ username }}/{{ container_name }}/logs:/logs"
+    capabilities:
+      - NET_ADMIN
+    restart_policy: unless-stopped
+  tags:
+    - update

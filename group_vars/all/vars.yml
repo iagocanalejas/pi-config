@@ -35,3 +35,4 @@ ip_gateway: "192.168.1.1"
 enable_homeassistant: false
 enable_pihole: false
 enable_samba: false
+enable_trade_bot: false

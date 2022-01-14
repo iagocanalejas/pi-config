@@ -4,11 +4,11 @@
 
   roles:
     - role: essential
-      tags: 
+      tags:
         - essential
 
     - role: network
-      tags: 
+      tags:
         - network
 
     - role: docker
@@ -18,22 +18,28 @@
     - role: containers/pihole
       when: enable_pihole | default(False)
       tags:
-        - pihole 
+        - pihole
         - containers
 
     - role: containers/homeassistant
       when: enable_homeassistant | default(False)
-      tags: 
+      tags:
         - homeassistant
         - smarthome
         - containers
-      
+
+    - role: containers/trade-bot
+      when: enable_trade_bot | default(False)
+      tags:
+        - trade-bot
+        - containers
+
     - role: filesystem/mounts
       when: enable_samba | default(False)
       tags:
         - mounts
         - filesystem
-      
+
     - role: sprat.mergerfs
       when: enable_samba | default(False)
       tags:
@@ -42,10 +48,10 @@
 
     - role: filesystem/samba
       when: enable_samba | default(False)
-      tags: 
+      tags:
         - samba
         - filesystem
-  
+
   tasks:
     - name: Prune everything
       community.docker.docker_prune:
@@ -62,4 +68,3 @@
       reboot:
         msg: Rebooting due to updates
         test_command: ping -c 4 "{{ mac_address_mapping[hostvars[inventory_hostname].ansible_default_ipv4.macaddress].ip }}"
-    
