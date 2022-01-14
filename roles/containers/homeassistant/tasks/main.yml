@@ -10,14 +10,14 @@
   docker_container:
     name: "{{ container_name }}"
     image: "homeassistant/home-assistant:stable"
-    hostname: '{{ inventory_hostname }}'
+    hostname: "{{ inventory_hostname }}"
     privileged: true
     pull: yes
     env:
       "TZ": "{{ timezone }}"
     volumes:
-      - '/home/{{ username }}/{{ container_name }}:/config'
-      - '/etc/localtime:/etc/localtime:ro'
+      - "/home/{{ username }}/{{ container_name }}:/config"
+      - "/etc/localtime:/etc/localtime:ro"
     capabilities:
       - NET_ADMIN
     restart_policy: unless-stopped

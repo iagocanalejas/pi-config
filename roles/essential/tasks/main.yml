@@ -12,13 +12,13 @@
   when: pi_exists.rc == 0
 
 - name: Generate the locale (Debian and Ubuntu)
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == "Debian"
   locale_gen:
     name: "{{ locale }}"
     state: present
 
 - name: Update and upgrade apt packages (Debian and Ubuntu)
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == "Debian"
   shell:
     cmd: apt update && apt upgrade -y
   tags:
@@ -39,11 +39,11 @@
     - update
 
 - name: Install extra packages
-  package: 
-    name: "{{ extra_packages }}" 
+  package:
+    name: "{{ extra_packages }}"
     state: latest
 
-- name: Set the correct ownership for the user's home folder (not using ansible.builtin.file because of idempotency)
+- name: Set the correct ownership for the user"s home folder (not using ansible.builtin.file because of idempotency)
   shell:
     cmd: "chown -R {{ username }}:{{ username}} /home/{{ username }}"
   register: chown_status
@@ -60,7 +60,7 @@
     line: "127.0.0.1 {{ inventory_hostname }}"
     owner: root
     group: root
-    mode: '0644' 
+    mode: "0644"
 
 - name: Suppress login messages
   file:

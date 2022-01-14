@@ -20,15 +20,16 @@
       - "80:80/tcp"
       - "443:443/tcp"
     env:
-      TZ: '{{ timezone }}'
-      WEBPASSWORD: '{{ pihole_password }}'
+      TZ: "{{ timezone }}"
+      WEBPASSWORD: "{{ pihole_password }}"
       ServerIP: '{{ ansible_facts["default_ipv4"]["address"] }}'
     dns_servers:
       - 127.0.0.1
       - 8.8.8.8
     volumes:
-      - './etc-pihole/:/etc/pihole/'
-      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+      - "/home/{{ username }}/{{ container_name }}/etc-pihole/:/etc/pihole/"
+      - "/home/{{ username }}/{{ container_name }}/etc-dnsmasq.d/:/etc/dnsmasq.d/"
+      - "/etc/localtime:/etc/localtime:ro"
     capabilities:
       - NET_ADMIN
     restart_policy: unless-stopped
