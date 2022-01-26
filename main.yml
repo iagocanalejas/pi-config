@@ -60,7 +60,7 @@
         networks: yes
         volumes: yes
         builder_cache: yes
-      when: "'update' in {{ ansible_run_tags }}"
+      when: "'update' in ansible_run_tags"
       tags:
         - update
 
