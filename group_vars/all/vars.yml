@@ -1,4 +1,3 @@
-
 #
 # Misc
 #
@@ -13,6 +12,11 @@ keyboard_layout: us
 username: pi
 
 guid: "1000"
+
+#
+# Networking configutation
+#
+enable_wifi: false
 
 mac_address_mapping:
   "e4:5f:01:58:1c:d2":

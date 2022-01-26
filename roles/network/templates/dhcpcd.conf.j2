@@ -6,10 +6,12 @@ static ip_address={{ ip_address }}/24
 static routers={{ ip_gateway }}
 static domain_name_servers={{ dns_nameservers | join(' ') }}
 
+{% if enable_wifi %}
 interface wlan0
 static ip_address={{ ip_address }}/24
 static routers={{ ip_gateway }}
 static domain_name_servers={{ dns_nameservers | join(' ') }}
+{% endif %}
 
 # Allow users of this group to interact with dhcpcd via the control socket.
 #controlgroup wheel
