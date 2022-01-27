@@ -4,7 +4,10 @@
 
   pre_tasks:
     - set_fact:
-        install_docker: "{{ enable_pihole }} or {{ enable_homeassistant }} or {{ enable_trade_bot }}"
+        install_docker: "{{ enable_pihole }} \
+          or {{ enable_homeassistant }} \
+          or {{ enable_trade_bot }} \
+          or {{ enable_jellyfin }}"
 
   roles:
     - role: essential
@@ -33,12 +36,6 @@
         - smarthome
         - containers
 
-    - role: containers/trade-bot
-      when: enable_trade_bot
-      tags:
-        - trade-bot
-        - containers
-
     - role: filesystem/mounts
       when: enable_samba
       tags:
@@ -56,6 +53,19 @@
       tags:
         - samba
         - filesystem
+
+    - role: containers/jellyfin
+      when: enable_jellyfin
+      tags:
+        - filesystem
+        - containers
+
+    ### TESTING ###
+    - role: containers/trade-bot
+      when: enable_trade_bot
+      tags:
+        - trade-bot
+        - containers
 
   tasks:
     - name: Prune everything

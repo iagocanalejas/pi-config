@@ -4,6 +4,7 @@
 hostname: pinas
 
 enable_samba: true
+enable_jellyfin: true
 
 #
 # MergerFS
@@ -31,10 +32,10 @@ mergerfs_mounts:
     options: allow_other,use_ino
 
 disks:
-  - { path: /mnt/movies, uuid: 180EE6C70EE69D4E, content: true }   # Movies
-  - { path: /mnt/anime1, uuid: 7296C6E196C6A4C7, content: true }   # Anime (A-L)
-  - { path: /mnt/anime2, uuid: 86C47CA0C47C9461, content: true }   # Anime (M-Z)
-  - { path: /mnt/trash, uuid: F21E328C1E324A3D, content: true }    # See/Trash
+  - { path: /mnt/movies, uuid: 180EE6C70EE69D4E, content: true } # Movies
+  - { path: /mnt/anime1, uuid: 7296C6E196C6A4C7, content: true } # Anime (A-L)
+  - { path: /mnt/anime2, uuid: 86C47CA0C47C9461, content: true } # Anime (M-Z)
+  - { path: /mnt/trash, uuid: F21E328C1E324A3D, content: true } # See/Trash
 
 #
 # Samba
@@ -45,7 +46,7 @@ samba_users:
   - name: "{{ username }}"
     password: "{{ password }}"
 
-samba_shares: 
+samba_shares:
   - name: Videos
     guest_ok: yes
     read_only: yes

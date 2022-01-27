@@ -4,15 +4,15 @@
 
 ## Features
 
-**Pi-hole**: Installs the Pi-hole Docker configuration so you can use Pi-hole for network-wide ad-blocking and local DNS. Make sure to update your network router config to direct all DNS queries through your Raspberry Pi if you want to use Pi-hole effectively!
+- **Pi-hole**: Installs the Pi-hole Docker configuration so you can use Pi-hole for network-wide ad-blocking and local DNS. Make sure to update your network router config to direct all DNS queries through your Raspberry Pi if you want to use Pi-hole effectively!
+- **Home Assistant**: Installs the Home Assistant Docker configuration to work as a home automation manager.
+- **TradeBot**: Test trading bot docker container fetched from [github](https://github.com/CyberPunkMetalHead/gateio-crypto-trading-bot-binance-announcements-new-coins).
 
-**Home Assistant**: Installs the Home Assistant Docker configuration to work as a home automation manager.
+### Media
 
-**MergerFs**: Combine mounted drives to improve navigation.
-
-**Samba**: Expose drives as shares to the lcoal network.
-
-**TradeBot**: Test trading bot docker container fetched from [github](https://github.com/CyberPunkMetalHead/gateio-crypto-trading-bot-binance-announcements-new-coins).
+- **MergerFs**: Combine mounted drives to improve navigation.
+- **Samba**: Expose drives as shares to the lcoal network.
+- **Jellyfin**: Organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
 
 ## Setup
 

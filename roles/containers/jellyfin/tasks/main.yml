@@ -1,0 +1,41 @@
+---
+- name: Make sure that QuickSync packages are installed
+  package:
+    name:
+      - vainfo
+    state: latest
+
+- name: Create Jellyfin folder on Pi.
+  ansible.builtin.file:
+    path: "/home/{{ username }}/{{ container_name }}"
+    state: directory
+    mode: 0755
+  become: false
+
+- name: Make sure the {{ container_name }} container is created and running
+  docker_container:
+    name: "{{ container_name }}"
+    image: "ghcr.io/linuxserver/jellyfin"
+    hostname: "{{ inventory_hostname }}"
+    privileged: yes
+    pull: yes
+    devices:
+      - "/dev/vcsm:/dev/vcsm"
+      - "/dev/vchiq:/dev/vchiq"
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    env:
+      "PUID": "{{ guid }}"
+      "PGID": "{{ guid }}"
+      "TZ": "{{ timezone }}"
+      "VERSION": "latest"
+    volumes:
+      - "/opt/vc/lib:/opt/vc/lib"
+      - "/home/{{ username }}/{{ container_name }}:/config"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ mergerfs_root }}/anime:/data/anime"
+      - "{{ mergerfs_root }}/media:/data/media"
+    restart_policy: unless-stopped

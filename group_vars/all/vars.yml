@@ -36,7 +36,14 @@ ip_gateway: "192.168.1.1"
 #
 # Enable/disable individual Docker containers
 #
-enable_homeassistant: false
+
+# Basic
 enable_pihole: false
+enable_homeassistant: false
+
+# Media
 enable_samba: false
+enable_jellyfin: false
+
+# Testing
 enable_trade_bot: false
