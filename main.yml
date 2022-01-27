@@ -2,6 +2,10 @@
 - hosts: rpi
   become: true
 
+  pre_tasks:
+    - set_fact:
+        install_docker: "{{ enable_pihole }} or {{ enable_homeassistant }} or {{ enable_trade_bot }}"
+
   roles:
     - role: essential
       tags:
@@ -12,42 +16,43 @@
         - network
 
     - role: docker
+      when: install_docker
       tags:
         - docker
 
     - role: containers/pihole
-      when: enable_pihole | default(False)
+      when: enable_pihole
       tags:
         - pihole
         - containers
 
     - role: containers/homeassistant
-      when: enable_homeassistant | default(False)
+      when: enable_homeassistant
       tags:
         - homeassistant
         - smarthome
         - containers
 
     - role: containers/trade-bot
-      when: enable_trade_bot | default(False)
+      when: enable_trade_bot
       tags:
         - trade-bot
         - containers
 
     - role: filesystem/mounts
-      when: enable_samba | default(False)
+      when: enable_samba
       tags:
         - mounts
         - filesystem
 
     - role: sprat.mergerfs
-      when: enable_samba | default(False)
+      when: enable_samba
       tags:
         - mergerfs
         - filesystem
 
     - role: filesystem/samba
-      when: enable_samba | default(False)
+      when: enable_samba
       tags:
         - samba
         - filesystem
@@ -63,6 +68,9 @@
       when: "'update' in ansible_run_tags"
       tags:
         - update
+
+    - name: Refresh inventory to ensure new instances exist in inventory
+      meta: refresh_inventory
 
     - name: reboot
       reboot:
