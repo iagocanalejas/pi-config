@@ -82,7 +82,5 @@
     - name: Refresh inventory to ensure new instances exist in inventory
       meta: refresh_inventory
 
-    - name: reboot
-      reboot:
-        msg: Rebooting due to updates
-        test_command: ping -c 4 "{{ mac_address_mapping[hostvars[inventory_hostname].ansible_default_ipv4.macaddress].ip }}"
+    - name: Force all notified handlers to run
+      meta: flush_handlers

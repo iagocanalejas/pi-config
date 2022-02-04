@@ -20,6 +20,7 @@
      - `group_vars/all/secrets.example.yml` to `secrets.yml` (replace configurations).
   2. Change `hosts.ini` IPs to match the ones the raspberries pick.
   3. Run the script: `ansible-playbook main.yml`.
+  4. Run the reboot script: `ansible-playbook reboot.yml`.
 
 ## Updating
 

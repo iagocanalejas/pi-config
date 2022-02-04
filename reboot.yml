@@ -1,0 +1,25 @@
+---
+- hosts: rpi
+  become: true
+  tasks:
+    - name: Set the current MAC address for eth0.
+      set_fact:
+        mac_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
+
+    - name: Set variables based on eth0 MAC address.
+      set_fact:
+        hostname: "{{ mac_address_mapping[mac_address].name }}"
+        ip_address: "{{ mac_address_mapping[mac_address].ip }}"
+
+    - name: "Update inventory file with new IPs"
+      delegate_to: localhost
+      become: false
+      lineinfile:
+        path: hosts.ini
+        regexp: "{{ hostname.split('.')[0] }}\ [a-z_]*=[0-9.]*"
+        line: "{{ hostname.split('.')[0] }} ansible_host={{ ip_address }}"
+
+    - name: reboot
+      reboot:
+        msg: Rebooting due to updates
+        test_command: ping -c 4 "{{ mac_address_mapping[hostvars[inventory_hostname].ansible_default_ipv4.macaddress].ip }}"

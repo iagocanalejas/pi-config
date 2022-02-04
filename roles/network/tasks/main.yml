@@ -35,11 +35,3 @@
   systemd:
     state: "{{ 'started' if enable_wifi else 'stopped' }}"
     name: wpa_supplicant
-
-- name: "Update inventory file with new IPs"
-  delegate_to: localhost
-  become: false
-  lineinfile:
-    path: hosts.ini
-    regexp: "{{ hostname.split('.')[0] }}\ [a-z_]*=[0-9.]*"
-    line: "{{ hostname.split('.')[0] }} ansible_host={{ ip_address }}"
