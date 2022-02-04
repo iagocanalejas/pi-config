@@ -24,6 +24,14 @@
   tags:
     - update
 
+- name: Disable HDMI on startup (for power savings)..
+  lineinfile:
+    dest: /etc/rc.local
+    regexp: "^/usr/bin/tvservice"
+    line: "/usr/bin/tvservice -o"
+    insertbefore: "^exit"
+    state: present
+
 - name: Check if reboot required
   stat:
     path: /var/run/reboot-required
