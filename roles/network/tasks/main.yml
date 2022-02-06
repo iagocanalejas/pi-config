@@ -13,7 +13,7 @@
     src: "templates/{{ item.template }}"
     dest: "{{ item.dest }}"
     mode: 0644
-  with_items:
+  loop:
     - { template: hostname.j2, dest: /etc/hostname }
     - { template: hosts.j2, dest: /etc/hosts }
     - { template: resolv.conf.j2, dest: /etc/resolv.conf }
@@ -27,7 +27,7 @@
   systemd:
     state: stopped
     name: "{{ item }}"
-  with_items:
+  loop:
     - bluetooth
     - hciuart
 

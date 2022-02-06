@@ -6,6 +6,6 @@
   file:
     path: /var/lib/dhcp/dhclient.leases
     state: absent
-  with_items:
+  loop:
     - /var/lib/dhcp/dhclient.leases
     - /var/lib/dhcpcd5/dhcpcd-eth0.lease

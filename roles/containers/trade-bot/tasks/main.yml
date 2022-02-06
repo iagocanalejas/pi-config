@@ -20,7 +20,7 @@
   template:
     src: "templates/{{ item.template }}"
     dest: "{{ item.dest }}"
-  with_items:
+  loop:
     - {
         template: config.yml.j2,
         dest: "/home/{{ username }}/{{ container_name }}/config.yml",

@@ -32,7 +32,7 @@
     | smbpasswd -s -a {{ item.name }}
   args:
     executable: /bin/bash
-  with_items: "{{ samba_users }}"
+  loop: "{{ samba_users }}"
   no_log: true
   register: create_user_output
   changed_when: "'Added user' in create_user_output.stdout"
@@ -42,4 +42,4 @@
     name: "{{ item }}"
     state: started
     enabled: true
-  with_items: "{{ samba_services }}"
+  loop: "{{ samba_services }}"
