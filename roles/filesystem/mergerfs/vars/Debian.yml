@@ -1,0 +1,4 @@
+---
+mergerfs_packages:
+  - fuse
+  - mergerfs

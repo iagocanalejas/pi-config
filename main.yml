@@ -42,7 +42,7 @@
         - mounts
         - filesystem
 
-    - role: sprat.mergerfs
+    - role: filesystem/mergerfs
       when: enable_samba
       tags:
         - mergerfs

@@ -1,0 +1,18 @@
+---
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_facts['os_family'] }}.yml"
+
+- name: Install or update Mergerfs packages
+  package:
+    name: "{{ mergerfs_packages }}"
+    state: latest
+
+- name: Mount mergerfs filesystems
+  become: true
+  mount:
+    fstype: fuse.mergerfs
+    src: "{{ ':'.join(item.branches | mandatory) }}"
+    path: "{{ item.path | mandatory }}"
+    opts: "{{ item.options | default('defaults') }}"
+    state: "{{ item.state | default('mounted') }}"
+  loop: "{{ mergerfs_mounts }}"
